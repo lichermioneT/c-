@@ -65,6 +65,26 @@ A& testfunc2()
     return a;
 }
 
+// 在调用处展开 不建立栈帧
+// 频繁调用的小函数
+// inline 空间换时间
+// 具体实现还是要看编译器
+inline int addx(int left, int right)
+{
+    return left + right;
+}
+
+void func(int n)
+{
+    cout<< "整型" <<endl;
+
+}
+
+void func(int* n)
+{
+    cout<< "整型指针" <<endl;
+    
+}
 
 int main()
 {
@@ -138,15 +158,98 @@ int main()
 // 函数使用引用返回 那么返回的变量出了函数的作用域还存在 就可以使用引用返回 否则不安全的
 
 // 函数性能测试  
-    size_t begin1 = clock();
-    for(size_t i = 0; i < 10000; i++)
-        testfunc1();
-    size_t endl = clock();
 
-    for(size_t i = 0; i < 10000; i++)
-        testfunc2();
+// 指针和引用的区别
+    // 引用相对来说安全一些的
+    // int a = 10;
+    // int& b = a; // b就是a的别名 不用开辟空间的
+    // int* p = &a; // 开辟一个指针变量存放a的地址 解引用可以找到a
 
-    size_t end2 = clock();
+    // a = 100;
+    // cout<< b <<endl;
+    // cout<< *p <<endl;
+
+    // int* const pi = &a;
+    // *pi = 55;
+
+    // cout<< b <<endl;
+    // cout<< *p <<endl;
+    // cout<< *pi <<endl;
+
+    // cout<< sizeof(b) <<endl;
+
+// 内联函数
+    // 频繁调用函数是有消耗的
+    // c语言使用宏函数 宏函数不用建立
+    // c++使用内联函数
+    // int ret = addx(3,5);
+
+// auto关键字  自动推导变量
+    // int a = 10;
+    // auto b = a; // b的类型是根据a的类型推导出是int
+    // auto c = 'a';
+    // int& t = a;
+    // auto& d = a;
+    // auto* e = &a;
+    // auto f = &a;
+
+    // cout<< typeid(a).name() <<endl;
+    // cout<< typeid(b).name() <<endl;
+    // cout<< typeid(c).name() <<endl;
+    // cout<< typeid(t).name() <<endl;
+    // cout<< typeid(d).name() <<endl;
+    // cout<< typeid(e).name() <<endl;
+    // cout<< typeid(f).name() <<endl;
+
+    // auto x = 10;       // x 被推导为 int
+    // auto y = 3.14;     // y 被推导为 double
+    // auto z = "hello";  // z 被推导为 const char*
+
+    // const auto a = 10;       // a 被推导为 const int
+    // auto& b = a;             // b 被推导为 const int&
+    // auto c = b;              // c 被推导为 int（去掉了 const 和引用）
+
+// 范围for 类似遍历数据 自动数据
+// 范围for 使用数组变量
+    // int array[] = {1,2,3,4,5};
+    // c语言实现的方法
+    // for(int i = 0; i < sizeof(array)/sizeof(array[0]); i++)
+    // {
+    //     array[i] *= 2;
+    // }
+
+    // for(int i = 0; i < sizeof(array)/sizeof(array[0]); i++)
+    // {
+    //     cout<< array[i] <<endl;
+    // }
+
+    // c++ 的范围for
+    // for(auto& e : array) // 自动推出e的类型  取出数据给一个别名 这样就操作了数据
+    // {
+    //     e *= 2;
+    // }
+
+    // for(auto e : array)
+    // {
+    //     cout<< e <<endl;
+    // }
+
+// c++    nullptr指针
+// c++里面直接定义就是宏定义00
+    int* p1 = NULL;
+    int* p2 = nullptr; // c++里面推荐的空指针
+    func(0);
+    
+    func(nullptr);
+
+
+
+
+
+
+
+
+
 
 
 
